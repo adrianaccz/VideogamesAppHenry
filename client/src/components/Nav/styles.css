@@ -1,0 +1,9 @@
+.btn-outline-success {
+  color: rgb(19, 148, 162);
+  border-color: rgb(19, 148, 162);
+}
+.btn-outline-success:hover {
+  color: white;
+  border-color: rgb(19, 148, 162);
+  background-color: rgb(36, 195, 195);
+}
