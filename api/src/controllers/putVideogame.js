@@ -1,12 +1,12 @@
 const { videogameUpdate } = require("../services/updateVideogame");
 
 const putVideogame = async(req, res) => {
-  const { name, description, platforms} = req.body
+  const { name, description, platforms, rating} = req.body
   const {id} = req.params
 
   try {
-    let putVideogame = await videogameUpdate(id, name, description, platforms)
-    res.status(200).send("Juego ha sido actualizado!!")
+    let videogameUpdated = await videogameUpdate(id, name, description, platforms, rating)
+    res.status(200).json(videogameUpdated)
   } catch (error) {
     res.status(404).send(error)
   }

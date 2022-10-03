@@ -12,6 +12,7 @@ import {
   FILTER_BY_RAITING,
   CLEAR_CACHE_VIDEOGAME,
   GET_NAME_VIDEOGAMES,
+  CLEAR_CACHE
 } from "../actions";
 
 // creamos el estado inicial
@@ -53,7 +54,6 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_VIDEOGAME:
       return {
         ...state,
-        videogames: state.videogames.filter((e) => e.id !== action.payload),
       };
     case FILER_BY_GENRES:
       const allVideogames = state.allVideogames;
@@ -136,8 +136,17 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         vidogameDetail: {}
       }
+    case CLEAR_CACHE:
+      return {
+      ...state,
+      videogames: [],
+      allVideogames: []
+    }
     case UPDATE_VIDEOGAME:
-      return {};
+      return {
+        ...state,
+        vidogameDetail: action.payload,
+      };
     default:
       return { ...state };
   }

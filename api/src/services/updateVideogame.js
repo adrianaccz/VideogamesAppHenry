@@ -1,21 +1,22 @@
 const {Videogame, Genre} = require('../db');
-const { getAllGames } = require('./getAllgames');
+const { getVideogameById } = require('./getIDVideogame');
 
-const videogameUpdate = async(id, name, description, platforms)=>{
+const videogameUpdate = async(id, name, description, platforms, rating)=>{
   try {
-    Videogame.update({
+    const updated = await Videogame.update({
       name: name,
       description: description,
       platforms: platforms,
-      
+      rating: rating
     }, { where: {id: id }
     });
-
+    console.log('updated', updated)
     /* Genre.update({
       name: name
     }, {
       where: {name: genre}
     }); */
+    return getVideogameById(id)
   } catch (error) {
     throw error
   }

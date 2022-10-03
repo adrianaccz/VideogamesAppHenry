@@ -1,6 +1,6 @@
 const {Videogame, Genre} = require('../db');
 
-const createVideoGames = async(name, description, date_launch, rating, plataforms, createdInDB, genre)=> {
+const createVideoGames = async(name, description, date_launch, rating, plataforms, createdInDB, genre, img)=> {
 
   //creo en la BD el juego con lo traido por body
   try {
@@ -10,7 +10,8 @@ const createVideoGames = async(name, description, date_launch, rating, plataform
       date_launch,
       rating,
       plataforms,
-      createdInDB
+      createdInDB,
+      img
     })
     // encuentro el genero que ya habiamos guardado en la BD, comparandolo con el genero que viene del body
     const genreInDB = await Genre.findAll({

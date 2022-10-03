@@ -40,7 +40,7 @@ export default function Home(){
     setCurrentPage(pageNumber)
   }
 
-  //-------------paginacion--------------------
+  //---------------------------------
 
   const [oder, setOrder] = useState('')
 

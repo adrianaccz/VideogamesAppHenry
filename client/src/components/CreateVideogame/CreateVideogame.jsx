@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import {  useDispatch, useSelector } from 'react-redux';
 import { createVideogame, getAllGenres, getAllVideogames } from '../../redux/actions';
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom';
+
 
 export function validate(videogame){
   let errors = {}
-  
+  const ExpReg="^[ a-zA-ZñÑáéíóúÁÉÍÓÚ]+$";
+
   if(!videogame.name.trim()){
     errors.name = 'Ingresa nombre del videojuego'
   }
   if(!videogame.description.trim()){
     errors.description = 'Ingresa una descripción'
   }
-
   if(videogame.plataforms.length === 0  || !videogame.plataforms){
     errors.plataforms = 'Ingresa al menos una plataforma'
   }
@@ -21,6 +22,9 @@ export function validate(videogame){
   }
   if(videogame.rating === '' || videogame.rating < 1 || videogame.rating > 5){
     errors.rating = 'Rating tiene que ser del 1 al 5'
+  }
+  if(videogame.rating.match(ExpReg)){
+    errors.rating = 'Valor ingresado debe ser númerico'
   }
   return errors
 }
@@ -54,9 +58,10 @@ console.log("allPlataforms",allPlataforms)
     name: "",
     description: "",
     date_launch: '',
-    rating: 0,
+    rating: "",
     plataforms: [],
-    genre: []
+    genre: [],
+
   })
 
   //estado local de errores
@@ -85,9 +90,10 @@ console.log("allPlataforms",allPlataforms)
       name: "",
       description: "",
       date_launch: '',
-      rating: 0,
+      rating: "",
       plataforms: [],
-      genre: []
+      genre: [],
+
     })
     history.push('/videogames')
   }
@@ -155,6 +161,16 @@ console.log("allPlataforms",allPlataforms)
               <p className="text-danger">{errors.description}</p>
             )}
             <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1"> Imagen: </span>
+              <input
+                type="text"
+                value={videogame.img}
+                name= "img"
+                onChange={(e) => handleChange(e)}
+                className="form-control"
+              />
+            </div>
+            <div className="input-group mb-3">
               <span className="input-group-text" id="basic-addon1"> Fecha de lanzamiento: </span>
               <input
                 className="form-control"
@@ -168,6 +184,8 @@ console.log("allPlataforms",allPlataforms)
               <span className="input-group-text" id="basic-addon1"> Rating: </span>
               <input
                 type="text"
+                placeholder="1 al 5"
+                pattern="[0-9]+"
                 value={videogame.rating}
                 name='rating'
                 className="form-control"
@@ -178,7 +196,7 @@ console.log("allPlataforms",allPlataforms)
               <p className="text-danger">{errors.rating}</p>
             )}
             <div className="input-group mb-3">
-              <label className="input-group-text" htmlfor="inputGroupSelect01" >Plataformas </label>
+              <label className="input-group-text" htmlFor="inputGroupSelect01" >Plataformas </label>
               <select className="form-select" id="inputGroupSelect01" onChange={(e)=> handleSelectPlataforms(e)}>
                   {
                     allPlataforms?.map((p, i) => <option value={p} key={i}>{p}</option>)
@@ -189,7 +207,7 @@ console.log("allPlataforms",allPlataforms)
               <p className="text-danger">{errors.plataforms}</p>
             )}
             <div className="input-group mb-3">
-              <label className="input-group-text" htmlfor="inputGroupSelect01">Generos</label>
+              <label className="input-group-text" htmlFor="inputGroupSelect01">Generos</label>
               <select className="form-select" id="inputGroupSelect01" onChange={(e)=> handleSelectGenres(e)}>
                   {
                     allGenres?.map(g => <option key={g.id} value={g.name}>{g.name}</option>)

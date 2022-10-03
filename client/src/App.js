@@ -6,6 +6,7 @@ import VideogameDetail from './components/VideogaDetail/VideogameDetail';
 import CreateVideogame from './components/CreateVideogame/CreateVideogame';
 import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
+import UpdateVideogame from './components/UpdateVideogame/UpdateVideogame';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         <Route exact path='/videogames/create'>
           <CreateVideogame/>
         </Route>
+        {/* <Route exact path='/videogames/edit'>
+          <UpdateVideogame/>
+        </Route> */}
         <Route exact path='/videogames'>
           <Home/>
         </Route>

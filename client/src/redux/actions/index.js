@@ -13,6 +13,7 @@ export const FILTER_BY_CREATED = 'FILTER_BY_CREATED';
 export const FILTER_BY_RAITING = 'FILTER_BY_RAITING';
 export const CLEAR_CACHE_VIDEOGAME = 'CLEAR_CACHE_VIDEOGAME';
 export const GET_NAME_VIDEOGAMES = 'GET_NAME_VIDEOGAMES';
+export const CLEAR_CACHE = 'CLEAR_CACHE';
 
 //ACTIONS
 
@@ -73,6 +74,28 @@ export const createVideogame = (payload) => {
   }
 }
 
+export const deleteVideogame = (id) => {
+  return async function(dispatch){
+    try {
+      await axios.delete(`http://localhost:3001/videogames/${id}`)
+      return dispatch({type: DELETE_VIDEOGAME})
+    } catch (error) {
+      throw error
+    }
+  }
+}
+
+export const updateVideogame = (id) => {
+  return async function(dispatch){
+    try {
+      const json = await axios.put(`http://localhost:3001/videogames/${id}`)
+      return dispatch({type: UPDATE_VIDEOGAME, payload: json.data})
+    } catch (error) {
+      throw error
+    }
+  }
+}
+
 export const filterVideogamesByGenres = (payload) => {
   console.log("payload filter by genres", payload);
   return{
@@ -102,20 +125,15 @@ export const filterByRaiting = (payload)=> {
   }
 }
 
-export const deleteVideogame = (id) => {
-  return{
-    type: DELETE_VIDEOGAME,
-    payload: id
-  }
-}
-
 export const ClearCacheVideogame = () => {
   return{
     type: CLEAR_CACHE_VIDEOGAME,
   }
 }
 
-
-export const updateVideogame = () => {
-  
+export const ClearAllVideogamesCache = () => {
+  return{
+    type: CLEAR_CACHE,
+  }
 }
+

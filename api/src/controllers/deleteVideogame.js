@@ -4,7 +4,7 @@ const videogamesController = async(req, res) => {
   const {id} = req.params
   const getvideogame = await deleteVideogame(id)
   try {
-    return res.status(200).json(getvideogame)
+    return res.status(200).send("Juego eliminado!!")
   } catch (error) {
     throw res.status(404).send('Juego no encontrado!!')
   }

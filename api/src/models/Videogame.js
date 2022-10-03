@@ -32,7 +32,11 @@ module.exports = (sequelize) => {
     createdInDB:{
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: true
+      defaultValue: true,
+    },
+    img: {
+      type: DataTypes.STRING,
+      defaultValue: "https://tipseducacion.com/wp-content/uploads/2014/04/video-juegos1.jpg"
     }
   },{
     timestamps: false

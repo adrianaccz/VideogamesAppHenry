@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"; 
-import { getVideogameDetail, ClearCacheVideogame } from '../../redux/actions';
+import { getVideogameDetail, ClearCacheVideogame, getAllVideogames } from '../../redux/actions';
 import { useEffect} from 'react' 
 import { useParams } from "react-router-dom";
 import Loading from '../Loading/Loading';
@@ -8,12 +8,36 @@ import { Link } from 'react-router-dom';
 import styles from './styles.css'
 
 const VideogameDetail = (props) => {
+
   
   const dispatch = useDispatch()
   const { id } = useParams()
+  const [videogame, setVideogame] = useState({
+    name: "",
+    description: "",
+    rating: "",
+    plataforms: [],
+  })
+
+  
+  // --------------- plataformas y editar ------------------
+  const [edition, setEdition] = useState(false)
+
+  const allVideogames = useSelector((state)=> state.videogames)
+    console.log("allVideogames desde details",allVideogames);
+    let videogamesMap = allVideogames.map(p => p.plataforms)
+
+    let allPlataforms = (videogamesMap.flat())
+    allPlataforms = allPlataforms.filter((item,index)=>{
+      return allPlataforms.indexOf(item) === index && item !== undefined;
+    })
+  console.log("allPlataforms",allPlataforms)
+  
+    //-------------------------------------------
 
   useEffect(()=>{
     dispatch(getVideogameDetail(id))
+    dispatch(getAllVideogames())
     return () => {
       dispatch(ClearCacheVideogame())
     }
@@ -22,7 +46,21 @@ const VideogameDetail = (props) => {
 
   const videogameDetail = useSelector((state)=> state.vidogameDetail)         // del reducer
 
-  console.log("videogames",videogameDetail)
+  //console.log("videogames",videogameDetail)
+
+  //edicion del editar
+
+  const handleEdition = (e)=>{
+    e.preventDefault()
+    setEdition(true)
+  }
+
+  const handleDelete = (e)=> {
+    setVideogame({
+      ...videogame,
+      plataforms: videogame.plataforms.filter(p => p !== e)
+    })
+  }
 
   return (
     Object.keys(videogameDetail).length === 0 ?
@@ -51,9 +89,69 @@ const VideogameDetail = (props) => {
               </div>
             </div>
               <Link to={'/videogames'}>
-                <button className="btn btn-outline-success">Regresar</button>
+                <button className="btn btn-outline-success buttoms">Regresar</button>
               </Link>
+
+              {/* -----------EDITAR----------------- */}
+              <button onClick={(e)=> handleEdition(e)} className="btn btn-outline-success buttoms">{edition ? "Guardar" : "Editar"}</button>
           </div>
+        {edition
+        ? <div>
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1"> Nombre: </span>
+              <input
+                //placeholder={videogameDetail.name}
+                type="text"
+                value={videogameDetail.name}
+                name= "name"
+                //onChange={(e) => handleChange(e)}
+                className="form-control"
+              />
+            </div>
+
+            <div className="input-group mb-3">
+            <span className="input-group-text"> Descripcion: </span>
+              <textarea
+                type="text"
+                name="description"
+                value={videogameDetail.description}
+                //placeholder={videogameDetail.description}
+                className="form-control"
+                /* onChange={(e) => handleChange(e)} */>
+              </textarea>
+            </div>
+
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1"> Rating: </span>
+              <input
+                type="text"
+                placeholder="1 al 5"
+                pattern="[0-9]+"
+                value={videogameDetail.rating}
+                name='rating'
+                className="form-control"
+                //onChange={(e) => handleChange(e)}
+              />
+            </div>
+
+            <div className="input-group mb-3">
+              <label className="input-group-text" htmlFor="inputGroupSelect01" >Plataformas </label>
+              <select className="form-select" id="inputGroupSelect01" /* onChange={(e)=> handleSelectPlataforms(e)} */>
+                  {
+                    allPlataforms?.map((p, i) => <option value={p} key={i}>{p}</option>)
+                  }
+              </select>
+            </div>
+            <div>
+            {videogameDetail.plataforms.map(e =>
+              <span className="badge bg-secondary m-1">
+                {e}
+                <i onClick={()=> handleDelete(e)} className="bi bi-x"></i>
+              </span>
+              )}
+          </div>
+          </div>
+        : false}
         </div>
       </div>
   )
