@@ -20,9 +20,9 @@ function App() {
         <Route exact path='/videogames/create'>
           <CreateVideogame/>
         </Route>
-        {/* <Route exact path='/videogames/edit'>
+        <Route exact path='/videogames/edit/:id'>
           <UpdateVideogame/>
-        </Route> */}
+        </Route>
         <Route exact path='/videogames'>
           <Home/>
         </Route>

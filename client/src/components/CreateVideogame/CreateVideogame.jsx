@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {  useDispatch, useSelector } from 'react-redux';
-import { createVideogame, getAllGenres, getAllVideogames } from '../../redux/actions';
+import { ClearAllVideogamesCache, createVideogame, getAllGenres, getAllVideogames } from '../../redux/actions';
 import { Link, useHistory } from 'react-router-dom';
 
 
@@ -85,6 +85,7 @@ console.log("allPlataforms",allPlataforms)
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createVideogame(videogame))
+    dispatch(ClearAllVideogamesCache())
     alert("Videojuego creado")
     setVideogame({
       name: "",

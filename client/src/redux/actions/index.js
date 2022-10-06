@@ -85,10 +85,10 @@ export const deleteVideogame = (id) => {
   }
 }
 
-export const updateVideogame = (id) => {
+export const updateVideogame = (id, payload) => {
   return async function(dispatch){
     try {
-      const json = await axios.put(`http://localhost:3001/videogames/${id}`)
+      const json = await axios.put(`http://localhost:3001/videogames/edit/${id}`, payload)
       return dispatch({type: UPDATE_VIDEOGAME, payload: json.data})
     } catch (error) {
       throw error

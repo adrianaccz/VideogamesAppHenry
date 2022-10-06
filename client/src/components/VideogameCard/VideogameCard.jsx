@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { deleteVideogame, getAllVideogames } from "../../redux/actions";
+import { deleteVideogame, getAllVideogames, ClearAllVideogamesCache, ClearCacheVideogame } from "../../redux/actions";
 import styles from './styles.css'
 import { Link } from 'react-router-dom';
 import {useDispatch} from 'react-redux'
@@ -9,7 +9,10 @@ export default function VideogameCard({id,name, genres, img}){
   const dispatch = useDispatch()
 
   const handleDelete = (id)=>{
+    dispatch(ClearCacheVideogame())  // agregado
     dispatch(deleteVideogame(id))
+    dispatch(ClearAllVideogamesCache())
+    dispatch(getAllVideogames())
     alert("Video Juego eliminado con exito!!")
   }
 

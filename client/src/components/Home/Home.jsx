@@ -6,11 +6,13 @@ import { getAllGenres,
   filterVideogamesByGenres,
   filterByCreated,
   filterByAscDesc,
-  filterByRaiting } from '../../redux/actions' 
-import { Link } from 'react-router-dom'
+  filterByRaiting, 
+  ClearCacheVideogame,
+  ClearAllVideogamesCache} from '../../redux/actions' 
 import VideogameCard from '../VideogameCard/VideogameCard'
 import Loading from "../Loading/Loading";
-import Paginated from '../Paginated/Paginated'
+import Paginated from '../Paginated/Paginated';
+import styles from './styles.css';
 
 
 export default function Home(){
@@ -19,7 +21,7 @@ export default function Home(){
 
   // arreglo del estado global
   const allVideogames = useSelector((state)=> state.videogames)       //clase, mapStateToProps, hooks trae en la constante todo lo que esta en el estado de videogames
-  //console.log('Todoslos juegos', allVideogames);
+  //console.log('Todoslos juegos', allVideogames[0]);
 
   const allGenres = useSelector((state)=> state.genres)
 
@@ -34,7 +36,7 @@ export default function Home(){
   const indexOfFristMovie = indexOfLastMovie - videogamesLimitPage
   // personajes que se van a ir renderizando
   const currentMovie = allVideogames.slice(indexOfFristMovie, indexOfLastMovie) 
-  console.log("currentmovie: ",currentMovie )
+  //console.log("currentmovie: ",currentMovie )
   // paginado que resive el numero de la pagina y asi ayuda con el renderizado
   const paginated = (pageNumber) => {
     setCurrentPage(pageNumber)
@@ -46,6 +48,7 @@ export default function Home(){
 
   /* llena el estado cuando se monta un componente */
   useEffect(()=>{
+    dispatch(ClearAllVideogamesCache())   // *
     dispatch(getAllVideogames())
     dispatch(getAllGenres())
   }, [dispatch])
@@ -128,7 +131,7 @@ export default function Home(){
               <div className='row p-3' >
                 {/* allVideogames se trajo el estado global, por lo tanto mapeamos ese estado para pasar la info que queremos que aparezcan en las card */}
                 {
-                  currentMovie[0].error ? currentMovie[0].error :
+                  currentMovie[0].error ? <div className="car-name mb-3 text-white font-error">{currentMovie[0].error}</div> :
                   currentMovie?.map( v => (
 
                     <VideogameCard
@@ -138,11 +141,11 @@ export default function Home(){
                       genres = {v.genres.map((g) => g.name === undefined ? g : g.name)}
                       img = {v.img}
                     />
-                  )
-
-                  )
+                  ))
                 }
+
               </div>
+                {/*  {allVideogames[0].error ? <div className="car-name mb-3 text-white font-error">{allVideogames[0].error}</div>  : false}*/}
             </div>
             <div className="mx-auto">
               <Paginated

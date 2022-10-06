@@ -21,7 +21,7 @@ router.get('/videogames/:id',videogameID)
 router.post('/videogames', createVideogames)
 router.get('/genres', genres)
 router.delete('/videogames/:id', videogamesController)
-router.put('/videogames/:id', putVideogame)
+router.put('/videogames/edit/:id', putVideogame)
 router.get('/plataforms', plataforms)
 
 module.exports = router;

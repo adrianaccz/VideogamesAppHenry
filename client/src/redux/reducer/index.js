@@ -66,7 +66,7 @@ const rootReducer = (state = initialState, action) => {
       const filterByGenres = allVideogames.filter((g) =>
         g.genres.includes(action.payload)
       );
-      console.log("filterByGenres", filterByGenres);
+      //console.log("filterByGenres", filterByGenres);
       if (filterByGenres.length === 0) {
         return {
           ...state,
@@ -143,9 +143,10 @@ const rootReducer = (state = initialState, action) => {
       allVideogames: []
     }
     case UPDATE_VIDEOGAME:
+      let newData = state.videogames.map((el)=> el.id === action.payload.id ? action.payload : el)
       return {
         ...state,
-        vidogameDetail: action.payload,
+        videogames: newData,
       };
     default:
       return { ...state };
