@@ -23,6 +23,7 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
+  
   switch (action.type) {
     case GET_ALL_VIDEOGAMES:
       return {
@@ -143,7 +144,7 @@ const rootReducer = (state = initialState, action) => {
       allVideogames: []
     }
     case UPDATE_VIDEOGAME:
-      let newData = state.videogames.map((el)=> el.id === action.payload.id ? action.payload : el)
+      let newData = state.videogames.map((el)=> el.id === action.id ? action.payload : el)
       return {
         ...state,
         videogames: newData,

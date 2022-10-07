@@ -9,12 +9,18 @@ export default function VideogameCard({id,name, genres, img}){
   const dispatch = useDispatch()
 
   const handleDelete = (id)=>{
-    dispatch(ClearCacheVideogame())  // agregado
     dispatch(deleteVideogame(id))
-    dispatch(ClearAllVideogamesCache())
-    dispatch(getAllVideogames())
+    //dispatch(ClearAllVideogamesCache())
+    //dispatch(getAllVideogames())
     alert("Video Juego eliminado con exito!!")
+    return () => {
+      dispatch(ClearAllVideogamesCache())
+    }
   }
+/* 
+  useEffect(() => {
+    dispatch(getAllVideogames())
+}, [dispatch]) */
 
 
   return (

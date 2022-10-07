@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"; 
 import { useEffect} from 'react' 
-import { getVideogameDetail, ClearCacheVideogame, getAllVideogames, updateVideogame } from '../../redux/actions';
+import { getVideogameDetail, ClearCacheVideogame, getAllVideogames, updateVideogame, ClearAllVideogamesCache } from '../../redux/actions';
 import { useParams } from "react-router-dom";
 import { Link, useHistory } from 'react-router-dom';
 import Loading from "../Loading/Loading";
@@ -57,14 +57,16 @@ const UpdateVideogame = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateVideogame(videogame))
-    alert("Videojuego editado con exito")
+    dispatch(updateVideogame(id, videogame))
     setVideogame({
       name: "",
       description: "",
       rating: "",
       plataforms: [],
     })
+    alert("Videojuego editado con exito")
+    dispatch(ClearCacheVideogame(id))
+    dispatch(ClearAllVideogamesCache())
     history.push('/videogames')
   }
   // --------------- plataformas ------------------

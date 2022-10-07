@@ -5,7 +5,7 @@ const { API_KEY } = process.env;
 
 const getVideogameById = async (id) => {
   const allVideogames = await getAllGames();
-  console.log(allVideogames)
+  //console.log(allVideogames)
   //console.log("id", typeof id);
   try {
     // valido getAllVideogames

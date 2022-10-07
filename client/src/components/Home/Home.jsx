@@ -48,7 +48,7 @@ export default function Home(){
 
   /* llena el estado cuando se monta un componente */
   useEffect(()=>{
-    dispatch(ClearAllVideogamesCache())   // *
+    //dispatch(ClearAllVideogamesCache())   // *
     dispatch(getAllVideogames())
     dispatch(getAllGenres())
   }, [dispatch])
